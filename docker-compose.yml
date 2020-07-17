@@ -1,0 +1,22 @@
+# ENV vars referenced below are automatically 
+# read in from .env file
+
+version: '2'
+services:
+  tf_serving:
+    container_name: tf_serving
+    image: tensorflow/serving 
+    ports:
+      - 8080:8501
+    volumes:
+      - './models:/models'
+    command:
+      - '--rest_api_port=${REST_API_PORT}' 
+      - '--model_name=${MODEL_NAME}'
+      - '--model_base_path=${MODEL_BASE_PATH}'
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - 80:8080
+
